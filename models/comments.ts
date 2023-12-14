@@ -8,6 +8,10 @@ const comment = new mongoose.Schema({
     content: {
         required: true,
         type: String
+    },
+    article: {
+        require: true,
+        type: mongoose.Schema.Types.ObjectId, ref: 'Article'
     }
 })
 
