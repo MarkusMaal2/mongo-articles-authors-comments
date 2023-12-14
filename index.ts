@@ -14,9 +14,9 @@ database.once('connected', () => {
     console.log("Database Connected")
 })
 
+// create application/json parser
 const app: Express = express();
 app.use(bodyParser.json());
-// create application/json parser
 app.use('/', articleController)
 /*app.get('/', (req:Request, res:Response) =>{
     res.send("Express + TypeScript Server");

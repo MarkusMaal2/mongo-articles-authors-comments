@@ -1,9 +1,9 @@
 import {Request, Response ,Router} from "express";
 import Article from "../models/article";
 
-const route: Router = Router();
+const router: Router = Router();
 
-route.post('/article', async (req: Request, res: Response) => {
+router.post('/article', async (req: Request, res: Response) => {
     const data = new Article({
         header: req.body.header,
         content: req.body.content
@@ -17,4 +17,33 @@ route.post('/article', async (req: Request, res: Response) => {
     }
 })
 
-export default route;
+router.get('/article', async (req: Request, res: Response) => {
+    try {
+        const data = await Article.find();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
+router.get('/article/:id', async (req: Request, res: Response) => {
+    try {
+        const data = await Article.findById(req.params.id);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
+router.delete('/article/:id', async (req: Request, res: Response)=> {
+    try {
+        const id = req.params.id;
+        await Article.findByIdAndDelete(id);
+        const data = await Article.find();
+        res.send(data);
+    } catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
+export default router;
