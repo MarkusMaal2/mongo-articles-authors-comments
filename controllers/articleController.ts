@@ -46,4 +46,17 @@ router.delete('/article/:id', async (req: Request, res: Response)=> {
     }
 })
 
+router.put('/article/:id', async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+        const result = await Article.findByIdAndUpdate(id, updatedData, options)
+        res.send(result)
+    }
+    catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
 export default router;
