@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose"
 import articleController from "./controllers/articleController";
 import commentController from "./controllers/commentController";
+import author from "./controllers/author";
 
 mongoose.connect("mongodb+srv://markusmaal:A9bpQ9RbUSTbZ34o@cluster0.u5k9lk4.mongodb.net/?retryWrites=true&w=majority");
 const database = mongoose.connection;
@@ -20,6 +21,7 @@ const app: Express = express();
 app.use(bodyParser.json());
 app.use('/', articleController)
 app.use('/', commentController)
+app.use('/', author)
 /*app.get('/', (req:Request, res:Response) =>{
     res.send("Express + TypeScript Server");
 })*/
