@@ -85,4 +85,16 @@ router.post('/article/:id/comment', async(req: Request, res: Response) => {
     }
 })
 
+router.get('/article/:id/comment', async (req: Request, res: Response) => {
+    try
+    {
+        const id = req.params.id;
+        const result = await Article.findById(id).populate("comments")
+        res.send(result)
+    }
+    catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
 export default router;
