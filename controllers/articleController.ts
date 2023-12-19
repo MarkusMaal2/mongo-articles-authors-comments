@@ -1,5 +1,6 @@
 import {Request, Response ,Router} from "express";
 import Article from "../models/article";
+import Comment from "../models/comments"
 
 const router: Router = Router();
 
@@ -52,6 +53,31 @@ router.put('/article/:id', async (req: Request, res: Response) => {
         const updatedData = req.body;
         const options = { new: true };
         const result = await Article.findByIdAndUpdate(id, updatedData, options)
+        res.send(result)
+    }
+    catch (error) {
+        res.status(500).json({message: error})
+    }
+})
+
+router.post('/article/:id/comment', async(req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const options =  {new: true};
+        const data = new Comment({
+            date: new Date(),
+            content: req.body.content,
+            article: id
+        })
+        const dataToSave = await data.save();
+        const comment_id = data._id
+        const result = await Article.findByIdAndUpdate(
+            { _id: id },
+            { $push: {
+                    comments: comment_id
+                }
+            }, options
+        )
         res.send(result)
     }
     catch (error) {
