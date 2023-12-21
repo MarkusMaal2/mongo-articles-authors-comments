@@ -7,7 +7,8 @@ const router: Router = Router();
 router.post('/article', async (req: Request, res: Response) => {
     const data = new Article({
         header: req.body.header,
-        content: req.body.content
+        content: req.body.content,
+        author: req.body.author
     })
 
     try {
